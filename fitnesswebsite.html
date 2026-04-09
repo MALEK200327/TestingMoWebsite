@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elevate Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #11172b;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text: #eef2ff;
+      --muted: #b6bfd6;
+      --primary: #5eead4;
+      --primary-dark: #14b8a6;
+      --accent: #8b5cf6;
+      --danger: #fb7185;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+      --max-width: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(94, 234, 212, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(139, 92, 246, 0.12), transparent 35%),
+        linear-gradient(180deg, #070b16 0%, #0b1020 50%, #0e1428 100%);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 6rem 0;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      max-width: 680px;
+      font-size: 1.05rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(94, 234, 212, 0.1);
+      border: 1px solid rgba(94, 234, 212, 0.18);
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.95rem 1.35rem;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #041112;
+      box-shadow: 0 12px 30px rgba(20, 184, 166, 0.32);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      backdrop-filter: blur(12px);
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 11, 22, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 78px;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #041112;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-weight: 500;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+    }
+
+    .menu-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 5rem 0 4rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--primary), #d8b4fe);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .stat-card,
+    .glass-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      backdrop-filter: blur(14px);
+    }
+
+    .stat-card {
+      padding: 1.2rem;
+    }
+
+    .stat-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .showcase {
+      padding: 1.2rem;
+    }
+
+    .showcase-main {
+      border-radius: 22px;
+      overflow: hidden;
+      min-height: 480px;
+      background:
+        linear-gradient(180deg, rgba(17, 23, 43, 0.15), rgba(17, 23, 43, 0.65)),
+        url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80') center/cover;
+      position: relative;
+    }
+
+    .floating-card {
+      position: absolute;
+      padding: 1rem 1.1rem;
+      border-radius: 20px;
+      background: rgba(7, 11, 22, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+
+    .floating-top {
+      top: 24px;
+      left: -24px;
+      width: 210px;
+    }
+
+    .floating-bottom {
+      right: -24px;
+      bottom: 24px;
+      width: 240px;
+    }
+
+    .floating-card .small {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .floating-card strong {
+      display: block;
+      font-size: 1.35rem;
+      margin-top: 0.35rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .program-card,
+    .testimonial,
+    .pricing-card,
+    .feature-card {
+      padding: 1.6rem;
+      height: 100%;
+    }
+
+    .program-card h3,
+    .feature-card h3,
+    .pricing-card h3 {
+      margin: 1rem 0 0.7rem;
+      font-size: 1.3rem;
+    }
+
+    .program-card p,
+    .feature-card p,
+    .pricing-card p,
+    .testimonial p {
+      color: var(--muted);
+    }
+
+    .icon-box {
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(94, 234, 212, 0.18), rgba(139, 92, 246, 0.18));
+      font-size: 1.5rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .about-image {
+      min-height: 500px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(17, 23, 43, 0.12), rgba(17, 23, 43, 0.55)),
+        url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=80') center/cover;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--card-border);
+    }
+
+    .check-list {
+      list-style: none;
+      display: grid;
+      gap: 0.9rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .check-list li {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      color: var(--muted);
+    }
+
+    .check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: rgba(94, 234, 212, 0.15);
+      color: var(--primary);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .pricing-card {
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border: 1px solid rgba(94, 234, 212, 0.35);
+      transform: translateY(-8px);
+    }
+
+    .plan-tag {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      background: rgba(94, 234, 212, 0.12);
+      color: var(--primary);
+      border: 1px solid rgba(94, 234, 212, 0.2);
+      font-weight: 700;
+    }
+
+    .price {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 1rem 0 0.2rem;
+    }
+
+    .price span {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin: 1.5rem 0;
+      display: grid;
+      gap: 0.8rem;
+      color: var(--muted);
+    }
+
+    .pricing-features li::before {
+      content: '•';
+      color: var(--primary);
+      margin-right: 0.65rem;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .stars {
+      color: #facc15;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .testimonial footer {
+      margin-top: 1.2rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .cta {
+      padding-bottom: 7rem;
+    }
+
+    .cta-card {
+      padding: 2.3rem;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .cta-form {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .cta-form input {
+      flex: 1 1 240px;
+      min-width: 0;
+      padding: 1rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      outline: none;
+    }
+
+    .footer {
+      padding: 2rem 0 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      color: var(--muted);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      padding: 1rem 1.2rem;
+      border-radius: 16px;
+      background: rgba(7, 11, 22, 0.9);
+      border: 1px solid rgba(94, 234, 212, 0.22);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      transform: translateY(120%);
+      transition: transform 0.35s ease;
+      z-index: 1100;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .about-grid,
+      .cta-card,
+      .grid-3,
+      .pricing-grid,
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .floating-top,
+      .floating-bottom {
+        position: static;
+        width: auto;
+        margin-top: 1rem;
+      }
+
+      .cta-form {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 78px;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        background: rgba(7, 11, 22, 0.96);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        flex-direction: column;
+        align-items: flex-start;
+        transform: scaleY(0);
+        transform-origin: top;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.25s ease;
+      }
+
+      .nav-links.open {
+        transform: scaleY(1);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 3rem;
+      }
+
+      .section {
+        padding: 4.5rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a href="#home" class="logo">
+        <span class="logo-mark">EF</span>
+        <span>Elevate Fitness</span>
+      </a>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+      </ul>
+
+      <a href="#join" class="btn btn-primary nav-cta">Join Today</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="badge">Performance coaching • Nutrition • Recovery</div>
+          <h1>Transform your body, <span>build your confidence</span>.</h1>
+          <p>
+            Elevate Fitness delivers premium training programs, world-class coaching,
+            and a results-driven community designed to help you move better, get stronger,
+            and stay consistent.
+          </p>
+          <div class="hero-actions">
+            <a href="#pricing" class="btn btn-primary">Start Your Plan</a>
+            <a href="#programs" class="btn btn-secondary">Explore Programs</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-card glass-card">
+              <h3>12k+</h3>
+              <p>Active members improving every week.</p>
+            </div>
+            <div class="stat-card glass-card">
+              <h3>98%</h3>
+              <p>Member satisfaction with coaching support.</p>
+            </div>
+            <div class="stat-card glass-card">
+              <h3>24/7</h3>
+              <p>Digital access to workouts and progress tools.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="showcase glass-card">
+            <div class="showcase-main"></div>
+          </div>
+          <div class="floating-card floating-top">
+            <span class="small">Weekly Progress</span>
+            <strong>+18% Strength</strong>
+            <span class="small">Average improvement over 8 weeks</span>
+          </div>
+          <div class="floating-card floating-bottom">
+            <span class="small">Personal Training</span>
+            <strong>1:1 Expert Guidance</strong>
+            <span class="small">Tailored programs for fat loss, strength, and mobility</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="programs">
+      <div class="container">
+        <div class="reveal">
+          <div class="badge">Signature Programs</div>
+          <h2 class="section-title">Train smarter with programs built for real progress</h2>
+          <p class="section-subtitle">
+            Whether you want to gain strength, lose weight, or improve your performance,
+            our coaching systems are designed to keep you accountable and moving forward.
+          </p>
+        </div>
+
+        <div class="grid-3" style="margin-top: 2rem;">
+          <article class="program-card glass-card reveal">
+            <div class="icon-box">🏋️</div>
+            <h3>Strength Coaching</h3>
+            <p>Structured resistance training focused on technique, progression, and measurable outcomes.</p>
+          </article>
+
+          <article class="program-card glass-card reveal">
+            <div class="icon-box">🔥</div>
+            <h3>Fat Loss System</h3>
+            <p>High-impact training combined with sustainable nutrition habits and weekly check-ins.</p>
+          </article>
+
+          <article class="program-card glass-card reveal">
+            <div class="icon-box">⚡</div>
+            <h3>Performance Training</h3>
+            <p>Build speed, agility, endurance, and athleticism with dynamic expert-led sessions.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <div class="about-image reveal"></div>
+
+        <div class="reveal">
+          <div class="badge">Why Choose Us</div>
+          <h2 class="section-title">A premium fitness experience designed around your goals</h2>
+          <p class="section-subtitle">
+            We combine data-driven programming, supportive coaching, and a motivating environment
+            to help you create long-term results without guesswork.
+          </p>
+
+          <ul class="check-list">
+            <li><span class="check">✓</span><span>Personalized workout plans tailored to your level and goals.</span></li>
+            <li><span class="check">✓</span><span>Recovery, mobility, and nutrition guidance to support consistency.</span></li>
+            <li><span class="check">✓</span><span>Experienced coaches who keep you accountable every step of the way.</span></li>
+            <li><span class="check">✓</span><span>Modern facility experience with digital support and progress tracking.</span></li>
+          </ul>
+
+          <a href="#join" class="btn btn-primary">Book a Free Consultation</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="reveal">
+          <div class="badge">Membership Plans</div>
+          <h2 class="section-title">Flexible pricing for every fitness journey</h2>
+          <p class="section-subtitle">
+            Choose a plan that matches your routine and level of support. Upgrade anytime as your goals evolve.
+          </p>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="pricing-card glass-card reveal">
+            <h3>Starter</h3>
+            <div class="price">£29<span>/month</span></div>
+            <p>Perfect for building consistency with full gym access.</p>
+            <ul class="pricing-features">
+              <li>Unlimited gym access</li>
+              <li>2 group classes per week</li>
+              <li>Basic progress tracking</li>
+              <li>Access to member app</li>
+            </ul>
+            <a href="#join" class="btn btn-secondary">Choose Starter</a>
+          </article>
+
+          <article class="pricing-card glass-card featured reveal">
+            <span class="plan-tag">Most Popular</span>
+            <h3>Pro</h3>
+            <div class="price">£59<span>/month</span></div>
+            <p>Ideal for members who want more structure and coaching.</p>
+            <ul class="pricing-features">
+              <li>Everything in Starter</li>
+              <li>Unlimited group classes</li>
+              <li>Monthly coaching review</li>
+              <li>Custom training plan</li>
+            </ul>
+            <a href="#join" class="btn btn-primary">Choose Pro</a>
+          </article>
+
+          <article class="pricing-card glass-card reveal">
+            <h3>Elite</h3>
+            <div class="price">£99<span>/month</span></div>
+            <p>For high performers who want 1:1 guidance and faster results.</p>
+            <ul class="pricing-features">
+              <li>Everything in Pro</li>
+              <li>Weekly personal training</li>
+              <li>Nutrition coaching</li>
+              <li>Priority support</li>
+            </ul>
+            <a href="#join" class="btn btn-secondary">Choose Elite</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="testimonials">
+      <div class="container">
+        <div class="reveal">
+          <div class="badge">Member Reviews</div>
+          <h2 class="section-title">Trusted by people serious about their fitness</h2>
+          <p class="section-subtitle">
+            Real stories from members who committed to the process and achieved meaningful results.
+          </p>
+        </div>
+
+        <div class="testimonials-grid">
+          <article class="testimonial glass-card reveal">
+            <div class="stars">★★★★★</div>
+            <p>"The coaching is incredible. I’ve built strength, improved my energy, and finally found a routine I can stick to."</p>
+            <footer>Sarah M. — Pro Member</footer>
+          </article>
+
+          <article class="testimonial glass-card reveal">
+            <div class="stars">★★★★★</div>
+            <p>"Everything feels premium, from the classes to the support. The team genuinely cares about your progress."</p>
+            <footer>James T. — Elite Member</footer>
+          </article>
+
+          <article class="testimonial glass-card reveal">
+            <div class="stars">★★★★★</div>
+            <p>"I joined to lose weight but stayed because of the community. The environment is motivating and professional."</p>
+            <footer>Amina R. — Starter Member</footer>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta" id="join">
+      <div class="container">
+        <div class="cta-card glass-card reveal">
+          <div>
+            <div class="badge">Start Today</div>
+            <h2 class="section-title" style="margin-bottom: 0.8rem;">Ready to elevate your fitness?</h2>
+            <p class="section-subtitle">Leave your email and our team will reach out with membership options, coaching details, and your free consultation.</p>
+          </div>
+
+          <form class="cta-form" id="signupForm">
+            <input type="email" id="email" placeholder="Enter your email address" required />
+            <button type="submit" class="btn btn-primary">Get Started</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>© 2026 Elevate Fitness. All rights reserved.</p>
+      <p>Designed for performance, confidence, and long-term results.</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">Thanks for joining Elevate Fitness. We’ll be in touch soon.</div>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+    const revealItems = document.querySelectorAll('.reveal');
+    const signupForm = document.getElementById('signupForm');
+    const toast = document.getElementById('toast');
+
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    navAnchors.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealItems.forEach(item => observer.observe(item));
+
+    const sections = document.querySelectorAll('main section[id]');
+    const setActiveLink = () => {
+      let currentId = 'home';
+      sections.forEach(section => {
+        const top = window.scrollY;
+        const offset = section.offsetTop - 120;
+        const height = section.offsetHeight;
+        if (top >= offset && top < offset + height) {
+          currentId = section.id;
+        }
+      });
+
+      navAnchors.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${currentId}`);
+      });
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email');
+      if (!email.value.trim()) return;
+
+      toast.classList.add('show');
+      signupForm.reset();
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3200);
+    });
+  </script>
+</body>
+</html>
